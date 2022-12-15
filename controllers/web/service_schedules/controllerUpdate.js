@@ -11,6 +11,15 @@ module.exports = {
     const linkApi = `/api/web/service_schedule/${serviceScheduleId} -update-`
     try {
       const { scheduleDate, quota } = req.body
+      const hourArr = [09,10,11,12,13,14,15,16]
+      const scheduleDateIsoString = new Date(scheduleDate).toISOString()
+      const scheduleDateHour = new Date(scheduleDateIsoString).getHours()
+      const found = hourArr.find(element => element === scheduleDateHour);
+
+      if (found === undefined) {
+        return notFound(res, 'Jam Service Scehdule Hanya Bisa di 09,10,11,12,13,14,15,16', scheduleDate, linkApi, dealerId)
+      }
+
       const serviceScheduleData = await queryGetOneServiceSchedule(linkApi, dealerId, serviceScheduleId, res)
       if(serviceScheduleData !== undefined){
         const dataError = await validateInputBodyServiceSchedule.validateInputBodyServiceSchedule(res, req.body, linkApi, dealerId)

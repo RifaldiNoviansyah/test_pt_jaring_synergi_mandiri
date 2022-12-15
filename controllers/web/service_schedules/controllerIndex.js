@@ -12,7 +12,7 @@ module.exports = {
       if (ServiceScheduleDatas.length > 0) {
         const result = ServiceScheduleDatas.map((ServiceScheduleNextDayData) => ({
           id: ServiceScheduleNextDayData.id,
-          scheduleDate: ServiceScheduleNextDayData.schedule_date,
+          scheduleDate: new Date(ServiceScheduleNextDayData.schedule_date).toLocaleString(),
           quota: ServiceScheduleNextDayData.quota,
           delStatus: ServiceScheduleNextDayData.del_status
         }))
